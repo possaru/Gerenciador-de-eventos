@@ -1,0 +1,42 @@
+body {
+    background-color: grey;
+    width: 99%;
+}
+
+#root-container {
+    width: 515w;
+    height: 98vh;
+    margin: auto;
+    position: relative;
+    background: antiquewhite;
+    overflow: auto;
+}
+
+#list-bg {
+    width: 90%;
+    height: 65vh;
+    margin: auto;
+    top: 20vh;
+    position: relative;
+    background-color: rgb(160, 142, 142);
+    overflow: auto;
+}
+
+#list-columns {
+    width: 99%;
+    height: 9svh;
+
+    margin: auto;
+    top: 1vh;
+    position: relative;
+}
+
+#list-column-button-container {
+    width: 100%;
+    height: 100%;
+    display: inline-grid;
+}
+
+.list-column-button {
+    grid-row: 1;
+}

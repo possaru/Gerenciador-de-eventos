@@ -3,7 +3,8 @@
 
 <head>
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="eventos.css">
+    <!-- <link rel="stylesheet" type="text/css" href="usuarios.css"> -->
+    <link rel="stylesheet" type="text/css" href="list_template.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 </head>
@@ -26,7 +27,6 @@
             </div>
 
             <script>
-                var row_count = 0;
                 fetch(`${window.location.href}=rows`)
                     .then(function (response) {
                         return response.json();
@@ -39,6 +39,7 @@
                             document.getElementById('list-rows').insertAdjacentHTML(
                                 'beforeend',
                                 `<div id="${json[i]['ID']}" class="list-item">\
+                                    <button class="edit-button">Edit</button>\
                                     <div class="list-cols">\
                                         ${json[i]['nome']}\
                                     </div>\

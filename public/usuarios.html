@@ -19,10 +19,44 @@
                     <button class="list-column-button">Nome</button>
                     <button class="list-column-button">Função</button>
                     <button class="list-column-button">Expediente</button>
-                    <button class="list-column-button">Nível de acesso</button>
                     <button class="list-column-button">Telefone</button>
                 </div>
             </div>
+            <div id="list-rows">
+            </div>
+
+            <script>
+                var row_count = 0;
+                fetch(`${window.location.href}=rows`)
+                    .then(function (response) {
+                        return response.json();
+                    }
+                    )
+                    .then(function (json) {
+                        console.log(json);
+                        for (i in json) {
+                            console.log(`building row: ${i}`);
+                            document.getElementById('list-rows').insertAdjacentHTML(
+                                'beforeend',
+                                `<div id="row-${i}" class="list-item">\
+                                    <div class="list-cols">\
+                                        ${json[i]['nome']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['função']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['expediente']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['telefone']}\
+                                    </div>\
+                                </div>`
+                            )
+
+                        }
+                    })
+            </script>
         </div>
     </div>
 </body>

@@ -19,10 +19,52 @@
                     <button class="list-column-button">Nome</button>
                     <button class="list-column-button">Serviço</button>
                     <button class="list-column-button">Valor base</button>
+                    <button class="list-column-button">Valor tipo</button>
                     <button class="list-column-button">Disponibilidade</button>
                     <button class="list-column-button">Telefone</button>
                 </div>
             </div>
+            <div id="list-rows">
+            </div>
+
+            <script>
+                var row_count = 0;
+                fetch(`${window.location.href}=rows`)
+                    .then(function (response) {
+                        return response.json();
+                    }
+                    )
+                    .then(function (json) {
+                        console.log(json);
+                        for (i in json) {
+                            console.log(`building row: ${i}`);
+                            document.getElementById('list-rows').insertAdjacentHTML(
+                                'beforeend',
+                                `<div id="row-${i}" class="list-item">\
+                                    <div class="list-cols">\
+                                        ${json[i]['nome']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['serviço']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['valor_base']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['valor_tipo']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['disponibilidade']}\
+                                    </div>\
+                                    <div class="list-cols">\
+                                        ${json[i]['telefone']}\
+                                    </div>\
+                                </div>`
+                            )
+
+                        }
+                    })
+            </script>
         </div>
     </div>
 </body>

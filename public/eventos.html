@@ -40,7 +40,7 @@
                             console.log(`building row: ${i}`);
                             document.getElementById('list-rows').insertAdjacentHTML(
                                 'beforeend',
-                                `<div id="row-${i}" class="list-item">\
+                                `<div id="${json[i]['ID']}" class="list-item">\
                                     <div class="list-cols">\
                                         ${json[i]['cliente']}\
                                     </div>\

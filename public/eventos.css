@@ -34,9 +34,46 @@ body {
 #list-column-button-container {
     width: 100%;
     height: 100%;
-    display: inline-grid;
+    display: flex;
+    justify-content: center;
 }
 
 .list-column-button {
     grid-row: 1;
+    align-content: center;
+    width: inherit;
+}
+
+#list-rows {
+    width: 99%;
+    height: 10%;
+    margin: auto;
+
+}
+
+.list-row-break {
+    top: 2vh;
+    position: relative;
+}
+
+.list-item {
+    background-color: rgb(190, 168, 168);
+
+    width: 100%;
+    height: 100%;
+
+    top: 2vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+}
+
+.list-cols {
+    grid-row: 1;
+    align-content: center;
+    width: inherit;
+    overflow: scroll;
 }

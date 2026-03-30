@@ -10,13 +10,13 @@ body {
 }
 
 .button-container {
-    --margin: 30px;
+    --margin: 3vh;
     margin-right: var(--margin);
     margin-left: var(--margin);
 }
 
 .home-buttons {
     background-color: antiquewhite;
-    height: 300px;
-    width: 400px;
+    height: 30vh;
+    width: 40vh;
 }

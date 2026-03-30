@@ -1,6 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const express = require('express');
+const mysql = require('mysql2')
 
 const app = express();
 
@@ -10,10 +11,18 @@ const base_url = `http://${hostname}:${port}`
 
 
 
+const db_connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root', //Mudar credenciais de acordo com sua configuração.
+    password: 'root',
+    database: 'gerenciador_DB', //Necessário executar o script ["mysql_setup.sql"]. Verifique o README.
+})
 //====================================================================
 
 app.use(express.static('public'));
 
+//Links
+//vvvvvvvvvvvvvv
 app.get("/", (req, res) => {
     access_report(req);
     console.log(`${base_url}/login`);
@@ -21,36 +30,14 @@ app.get("/", (req, res) => {
     res.end()
     console.log(`Redirecting to [/login]`);
 })
+app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos"], load_page);
 
-app.get("/login", (req, res) => {
-    access_report(req);
-    load_page(req, res);
-})
-
-app.get("/home", (req, res) => {
-    access_report(req);
-    load_page(req, res);
-})
-
-app.get("/eventos", (req, res) => {
-    access_report(req);
-    load_page(req, res);
-})
-
-app.get("/usuarios", (req, res) => {
-    access_report(req);
-    load_page(req, res);
-})
-
-app.get("/contatos", (req, res) => {
-    access_report(req);
-    load_page(req, res);
-})
+app.get(["/eventos=rows", "/usuarios=rows", "/contatos=rows"], load_db_rows); //Requerimento de dados
 
 app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 })
-
+//^^^^^^^^^^^^^^
 //====================================================================
 
 function access_report(req) {
@@ -59,8 +46,24 @@ function access_report(req) {
 }
 
 function load_page(req, res) {
+    access_report(req);
     res.writeHead(200, "success", { "content-type": 'text/html' });
-//    console.log(`public${req.url}.html`);
+
     res.write(fs.readFileSync(`public${req.url}.html`));
     res.end();
+}
+
+function load_db_rows(req, res) {
+    access_report(req);
+    let url = req.url.slice(1).replace('=rows', '')
+    console.log(`Mysql> Getting table [${url}]`)
+
+    db_connection.query(
+        `SELECT * FROM ${url}`,
+        function (err, result, fields) {
+            var data = [result]
+            res.send(result);
+        }
+    )
+
 }

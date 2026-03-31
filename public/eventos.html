@@ -17,55 +17,17 @@
         <div id="list-bg">
             <div id="list-columns">
                 <div id="list-column-button-container">
-                    <button class="list-column-button">Cliente</button>
-                    <button class="list-column-button">Data</button>
-                    <button class="list-column-button">Local</button>
-                    <button class="list-column-button">Tipo</button>
-                    <button class="list-column-button">Convidados</button>
-                    <button class="list-column-button">Responsável</button>
+                    <!--id deve ser igual ao nome no banco de dados-->
+                    <button id="cliente" class="list-column-button">Cliente</button>
+                    <button id="data" class="list-column-button">Data</button>
+                    <button id="local" class="list-column-button">Local</button>
+                    <button id="tipo" class="list-column-button">Tipo</button>
+                    <button id="convidados" class="list-column-button">Convidados</button>
+                    <button id="responsável" class="list-column-button">Responsável</button>
                 </div>
             </div>
-            <div id="list-rows">
-            </div>
-
-            <script>
-                fetch(`${window.location.href}=rows`)
-                    .then(function (response) {
-                        return response.json();
-                    }
-                    )
-                    .then(function (json) {
-                        console.log(json);
-                        for (i in json) {
-                            console.log(`building row: ${i}`);
-                            document.getElementById('list-rows').insertAdjacentHTML(
-                                'beforeend',
-                                `<div id="${json[i]['ID']}" class="list-item">\
-                                    <button class="edit-button">Edit</button>\
-                                    <div class="list-cols">\
-                                        ${json[i]['cliente']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['data']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['local']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['tipo']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['convidados']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['responsável']}\
-                                    </div>\
-                                </div>`
-                            )
-
-                        }
-                    })
-            </script>
+            <div id="list-rows"></div>
+            <script src="./list_template.js"></script>
         </div>
     </div>
 </body>

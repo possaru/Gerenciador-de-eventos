@@ -19,7 +19,9 @@ const db_connection = mysql.createConnection({
 })
 //====================================================================
 
-app.use(express.static('public'));
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));;
 
 //Links
 //vvvvvvvvvvvvvv
@@ -30,7 +32,7 @@ app.get("/", (req, res) => {
     res.end()
     console.log(`Redirecting to [/login]`);
 })
-app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos"], load_page);
+app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos", "/cadastrocontatos"], load_page);
 
 app.get(["/eventos=rows", "/usuarios=rows", "/contatos=rows"], load_db_rows); //Requerimento de dados
 
@@ -47,23 +49,33 @@ function access_report(req) {
 
 function load_page(req, res) {
     access_report(req);
-    res.writeHead(200, "success", { "content-type": 'text/html' });
 
-    res.write(fs.readFileSync(`public${req.url}.html`));
-    res.end();
+    const filePath = path.join(__dirname, 'public', `${req.url}.html`);
+
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send("Página não encontrada");
+    }
 }
 
 function load_db_rows(req, res) {
     access_report(req);
-    let url = req.url.slice(1).replace('=rows', '')
-    console.log(`Mysql> Getting table [${url}]`)
+
+    let url = req.url.slice(1).replace('=rows', '');
+    console.log(`Mysql> Getting table [${url}]`);
 
     db_connection.query(
         `SELECT * FROM ${url}`,
         function (err, result, fields) {
-            var data = [result]
+
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+
+            res.setHeader('Content-Type', 'application/json');
             res.send(result);
         }
-    )
-
+    );
 }

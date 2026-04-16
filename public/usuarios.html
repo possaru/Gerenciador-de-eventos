@@ -4,15 +4,25 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="eventos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 </head>
 
 <body>
     <div id="root-container">
-        <div style="text-align: center">
-            <h1>Usuarios</h1>
+        <!-- HEADER -->
+        <div id="top-bar">
+
+            <img src="/resources/voltar.png" class="back-button" onclick="goHome()">
+
+            <div class="title-container">
+                <img src="/resources/usuarios.png" class="title-icon">
+                <h1>Usuarios</h1>
+            </div>
+
         </div>
+
         <div id="list-bg">
             <div id="list-columns">
                 <div id="list-column-button-container">
@@ -24,6 +34,12 @@
             </div>
             <div id="list-rows">
             </div>
+
+            <script>
+                function goHome() {
+                    window.location.href = "/home";
+                }
+            </script>
 
             <script>
                 var row_count = 0;
@@ -43,7 +59,7 @@
                                         ${json[i]['nome']}\
                                     </div>\
                                     <div class="list-cols">\
-                                        ${json[i]['função']}\
+                                        ${json[i]['funcao']}\
                                     </div>\
                                     <div class="list-cols">\
                                         ${json[i]['expediente']}\

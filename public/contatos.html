@@ -2,71 +2,83 @@
 <html>
 
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="eventos.css">
+    <title>home</title>
+    <link rel="stylesheet" type="text/css" href="contatos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 </head>
 
 <body>
     <div id="root-container">
-        <div style="text-align: center">
-            <h1>Contatos</h1>
+
+        <!-- HEADER -->
+        <div id="top-bar">
+            <img src="/resources/mais.png" class="add-button" onclick="goToCadastro()">    
+            <img src="/resources/voltar.png" class="back-button" onclick="goHome()">
+
+            <div class="title-container">
+                <img src="/resources/contato.png" class="title-icon">
+                <h1>Contatos</h1>
+            </div>
+
         </div>
+
+        <!-- TABELA -->
         <div id="list-bg">
+
             <div id="list-columns">
                 <div id="list-column-button-container">
+                    <button class="list-column-button">Tipo de Serviço</button>
                     <button class="list-column-button">Nome</button>
-                    <button class="list-column-button">Serviço</button>
-                    <button class="list-column-button">Valor base</button>
-                    <button class="list-column-button">Valor tipo</button>
-                    <button class="list-column-button">Disponibilidade</button>
+                    <button class="list-column-button">CNPJ</button>
+                    <button class="list-column-button">IE</button>
+                    <button class="list-column-button">Website</button>
+                    <button class="list-column-button">Email</button>
                     <button class="list-column-button">Telefone</button>
                 </div>
             </div>
-            <div id="list-rows">
-            </div>
 
-            <script>
-                var row_count = 0;
-                fetch(`${window.location.href}=rows`)
-                    .then(function (response) {
-                        return response.json();
-                    }
-                    )
-                    .then(function (json) {
-                        console.log(json);
-                        for (i in json) {
-                            console.log(`building row: ${i}`);
-                            document.getElementById('list-rows').insertAdjacentHTML(
-                                'beforeend',
-                                `<div id="row-${i}" class="list-item">\
-                                    <div class="list-cols">\
-                                        ${json[i]['nome']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['serviço']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['valor_base']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['valor_tipo']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['disponibilidade']}\
-                                    </div>\
-                                    <div class="list-cols">\
-                                        ${json[i]['telefone']}\
-                                    </div>\
-                                </div>`
-                            )
+            <div id="list-rows"></div>
 
-                        }
-                    })
-            </script>
         </div>
+
     </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        function goHome() {
+            window.location.href = "/home";
+        }
+    </script>
+
+    <script>
+        function goToCadastro() {
+            window.location.href = "/cadastrocontatos";
+        }
+    </script>
+
+    <script>
+        fetch('/contatos=rows')
+            .then(res => res.json())
+            .then(json => {
+                for (i in json) {
+                    document.getElementById('list-rows').insertAdjacentHTML(
+                        'beforeend',
+                        `<div class="list-item">
+                            <div class="list-cols">${json[i]['tipo_servico']}</div>
+                            <div class="list-cols">${json[i]['nome']}</div>
+                            <div class="list-cols">${json[i]['cnpj']}</div>
+                            <div class="list-cols">${json[i]['IE']}</div>
+                            <div class="list-cols">${json[i]['wsite']}</div>
+                            <div class="list-cols">${json[i]['email']}</div>
+                            <div class="list-cols">${json[i]['telefone']}</div>
+                        </div>`
+                    );
+                }
+            });
+    </script>
+
 </body>
 
 </html>

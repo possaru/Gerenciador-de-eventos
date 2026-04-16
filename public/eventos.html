@@ -63,7 +63,7 @@
                             console.log(`building row: ${i}`);
                             document.getElementById('list-rows').insertAdjacentHTML(
                                 'beforeend',
-                                `<div id="row-${i}" class="list-item">\
+                                `<div id="row-${i}" class="list-item" onclick="window.location.href='eventos/${i}'">\
                                     <div class="list-cols">\
                                         ${json[i]['cliente']}\
                                     </div>\

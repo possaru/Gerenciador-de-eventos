@@ -32,9 +32,10 @@ app.get("/", (req, res) => {
     res.end()
     console.log(`Redirecting to [/login]`);
 })
-app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos", "/cadastrocontatos", "/cadastroeventos", "/cadastrousuarios"], load_page);
+app.get(["/login", "/home", "/eventos", "/eventos/:id", "/usuarios", "/contatos", "/cadastrocontatos", "/cadastroeventos", "/cadastrousuarios"], load_page);
 
 app.get(["/eventos=rows", "/usuarios=rows", "/contatos=rows"], load_db_rows); //Requerimento de dados
+app.get("/eventos/:id/row", load_evento);
 
 app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
@@ -50,7 +51,14 @@ function access_report(req) {
 function load_page(req, res) {
     access_report(req);
 
-    const filePath = path.join(__dirname, 'public', `${req.url}.html`);
+    let filePath;
+
+    if (req.url.slice(0, 9) == '/eventos/' && req.url.slice(9) >= 0) {
+        filePath = path.join(__dirname, 'public', `eventosfull.html`);
+    }
+    else {
+        filePath = path.join(__dirname, 'public', `${req.url}.html`);
+    }
 
     if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
@@ -67,6 +75,26 @@ function load_db_rows(req, res) {
 
     db_connection.query(
         `SELECT * FROM ${url}`,
+        function (err, result, fields) {
+
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+
+            res.setHeader('Content-Type', 'application/json');
+            res.send(result);
+        }
+    );
+}
+
+function load_evento(req, res) {
+    console.log("mysql query at url: " + req.url);
+    const id = req.url.replace('/eventos/', '').replace('/row', '')
+    console.log(`Mysql> Getting row ${id} from [eventos]`)
+
+    db_connection.query(
+        `SELECT * FROM eventos LIMIT ${id},1`,
         function (err, result, fields) {
 
             if (err) {

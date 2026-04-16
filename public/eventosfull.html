@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/eventosfull.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="root-container">
+
+        <!-- HEADER -->
+        <div id="top-bar">
+            <img src="/resources/voltar.png" class="back-button" onclick="goBack()">
+
+            <div class="title-container">
+                <img src="/resources/eventos.png" class="title-icon">
+                <h1>Eventos</h1>
+            </div>
+
+        </div>
+
+        <div id="list-bg">
+            <div class="form-group">
+                <label>Nome:</label>
+                <div id="nome"></div>
+            </div>
+            <div class="form-group">
+                <label>Data:</label>
+                <div id="data"></div>
+            </div>
+            <div class="form-group">
+                <label>Nº Convidados:</label>
+                <div id="convidados_n"></div>
+            </div>
+            <div class="form-group">
+                <label>Responsável:</label>
+                <div id="responsavel"></div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label>Tipo de serviço:</label>
+                <div id="tipo_servico"></div>
+            </div>
+            <div class="form-group">
+                <label>Fornecedor:</label>
+                <div id="fornecedor"></div>
+            </div>
+            <div class="form-group">
+                <label>Valor:</label>
+                <div id="valor"></div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label>Valor total:</label>
+                <div id="valor_total"></div>
+            </div>
+        </div>
+        <script>
+            function goBack() {
+                window.location.href = "/eventos";
+            }
+        </script>
+
+        <script>
+            var row_count = 0;
+            fetch(`${window.location.href}/row`)
+                .then(function (response) {
+                    return response.json();
+                }
+                )
+                .then(function (json) {
+                    console.log(json[0]);
+                    document.getElementById("nome").textContent = json[0]['cliente']
+                    document.getElementById("data").textContent = json[0]['data']
+                    document.getElementById("convidados_n").textContent = json[0]['convidados']
+                    document.getElementById("responsavel").textContent = json[0]['responsavel']
+                })
+        </script>
+    </div>
+    </div>
+</body>
+
+</html>

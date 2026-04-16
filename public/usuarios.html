@@ -13,7 +13,7 @@
     <div id="root-container">
         <!-- HEADER -->
         <div id="top-bar">
-
+            <img src="/resources/mais.png" class="add-button" onclick="goToCadastro()">
             <img src="/resources/voltar.png" class="back-button" onclick="goHome()">
 
             <div class="title-container">
@@ -38,6 +38,12 @@
             <script>
                 function goHome() {
                     window.location.href = "/home";
+                }
+            </script>
+
+            <script>
+                function goToCadastro() {
+                    window.location.href = "/cadastrousuarios";
                 }
             </script>
 

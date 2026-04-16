@@ -165,3 +165,22 @@ body {
             brightness(105%) 
             contrast(105%);
 }
+.add-button {
+    filter: brightness(0) saturate(100%) 
+            invert(79%) 
+            sepia(63%) 
+            saturate(450%) 
+            hue-rotate(2deg) 
+            brightness(105%) 
+            contrast(105%);
+}
+
+.form-bg {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background-color: rgba(57, 62, 70, 0.85);
+    border-radius: 10px;
+    box-sizing: border-box;
+}

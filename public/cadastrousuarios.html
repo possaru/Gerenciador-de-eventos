@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cadastro de Usuários</title>
+    <link rel="stylesheet" href="/contatos.css">
+    <link rel="stylesheet" href="/cadastrocontatos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="root-container">
+
+        <!-- HEADER -->
+        <div id="top-bar">
+
+            <img src="/resources/voltar.png" class="back-button" onclick="goBack()">
+
+            <div class="title-container">
+                <img src="/resources/contato.png" class="title-icon">
+                <h1>Novo Contato</h1>
+            </div>
+
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <div class="form-bg">
+
+            <div class="form-container">
+
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Função</label>
+                    <input type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Expediente</label>
+                    <input type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text">
+                </div>
+
+                <button class="submit-button">Adicionar</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "/usuarios";
+        }
+    </script>
+
+</body>
+
+</html>

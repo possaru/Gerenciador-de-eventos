@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
     res.end()
     console.log(`Redirecting to [/login]`);
 })
-app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos", "/cadastrocontatos"], load_page);
+app.get(["/login", "/home", "/eventos", "/usuarios", "/contatos", "/cadastrocontatos", "/cadastroeventos", "/cadastrousuarios"], load_page);
 
 app.get(["/eventos=rows", "/usuarios=rows", "/contatos=rows"], load_db_rows); //Requerimento de dados
 

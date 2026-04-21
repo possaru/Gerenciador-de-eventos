@@ -21,6 +21,8 @@ const db_connection = mysql.createConnection({
 
 const path = require('path');
 
+let VERIFIED_IP_ACCESS = []
+
 app.use(express.static(path.join(__dirname, 'public')));;
 
 //Links
@@ -37,6 +39,41 @@ app.get(["/login", "/home", "/eventos", "/eventos/:id", "/usuarios", "/contatos"
 app.get(["/eventos=rows", "/usuarios=rows", "/contatos=rows"], load_db_rows); //Requerimento de dados
 app.get("/eventos/:id/row", load_evento);
 
+app.get("/login/cred_check=/:id/:pass", (req, res) => {
+    let id = req.params.id;
+    let pass = req.params.pass;
+    access_report(req, res);
+    console.log(`>>[Credential check] -- (id: ${id} | pass: ${pass})`);
+
+    db_connection.query(
+        `SELECT * FROM usuarios WHERE login LIKE '${id}'`,
+        function (err, result, fields) {
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            } else if (result == "") {
+                console.log("Invalid User\n")
+                res.setHeader('Content-Type', 'application/json');
+                res.send({ credential_check: 'invalid user' });
+            } else {
+                if (result[0]['login'] == id &&
+                    result[0]['senha'] == pass) {
+                    console.log("Success\n")
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send({ credential_check: 'valid user' });
+
+                    let ip = req.ip;
+                    VERIFIED_IP_ACCESS.push(req.ip)
+                } else {
+                    console.log('Invalid Pass\n');
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send({ credential_check: 'invalid pass' });
+                }
+            }
+        }
+    );
+})
+
 app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 })
@@ -50,6 +87,21 @@ function access_report(req) {
 
 function load_page(req, res) {
     access_report(req);
+    let allow = false;
+
+    for (i in VERIFIED_IP_ACCESS) {
+
+        if (req.ip == VERIFIED_IP_ACCESS[i]) { allow = true }
+    }
+
+    if (req.url != "/login") {
+        if (allow == false) {
+            console.log("!! User unverified -- Redirecting to [/login] !!\n");
+            return res.redirect(`${base_url}/login`)
+        }
+    } else if (req.url == "/login" && allow == true) {
+        return res.redirect(`${base_url}/home`)
+    }
 
     let filePath;
 

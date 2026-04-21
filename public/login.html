@@ -14,7 +14,6 @@
         <div>
             <div id="login-credentials-container">
                 <div>Senha:<input class="login-items" id="login-password">
-                    <br> (Credenciais não implementadas)
                     <br> (Pressione Entrar)</input>
                 </div>
             </div>
@@ -23,9 +22,29 @@
                 </div>
             </div>
         </div>
-        <button style="position: absolute; margin-top: 300px;" onclick="location.href = `/home`">Entrar</button>
+        <button style="position: absolute; margin-top: 300px;" onclick="login()">Entrar</button>
+        <div style="position: absolute; margin-top: 350px;" id="status"></div>
     </div>
 
+    <script>
+        function login() {
+            let id = document.getElementById("login-id").value
+            let pass = document.getElementById("login-password").value
+            console.log(`Checking credentials: [ ${id} : ${pass} ]`);
+            let result;
+            fetch(`${window.location.href}/cred_check=/${id}/${pass}`)
+                .then(function (response) {
+                    return response.json()
+                })
+                .then(function (json) {
+                    result = json['credential_check']
+                    console.log(result)
+                    if (result == 'valid user') {
+                        window.location.href = '/home'
+                    } else { document.getElementById('status').textContent = "algo deu errado" }
+                })
+        }
+    </script>
 </body>
 
 </html>
